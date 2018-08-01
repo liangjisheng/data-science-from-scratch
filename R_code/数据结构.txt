@@ -1,0 +1,134 @@
+v <- c(10,20,30)
+
+v[1]
+
+v[c(1,3)]
+
+names(v) <- c("one","two","three")
+
+print(v)
+
+mode("a")
+
+d <- as.Date("2010-03-15")
+
+class(d)
+
+pi
+
+pi[1]
+
+向量没有维数
+
+> A <- 1:6
+> dim(a)
+[1] 3 2
+> dim(A)
+NULL
+> dim(A) <- c(2,3)
+> print(A)
+     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6
+
+列表中的元素类型可以不相同，而向量中的元素类型必须相同
+
+> B <- list(1,2,3,4,5,6)
+> dim(B)
+NULL
+> dim(B) <- c(2,3)
+> print(B)
+     [,1] [,2] [,3]
+[1,] 1    3    5   
+[2,] 2    4    6   
+
+因子(factor)
+
+R中每一个分类变量的可能值称为一个水平(level).一个
+
+有水平值构成的向量叫做因子(factor),
+> v <- c(1,1,2,2,3,3,4,4,5,5)
+> v
+ [1] 1 1 2 2 3 3 4 4 5 5
+> f <- factor(v)
+> f
+ [1] 1 1 2 2 3 3 4 4 5 5
+Levels: 1 2 3 4 5
+
+统计函数用向量作为参数，unlist()将列表转换为向量
+
+sapply()使函数对象应用与每一个元素,返回逻辑值
+
+lapple()把函数应用与列表的每一个元素
+
+matrix(lst,2,3) 是向量或列表转换为矩阵
+
+data.frame() 将多个向量和因子组合成一个数据框
+
+as.data.frame() 将一个向量列表转换为数据框图
+
+预分配数据框图
+dfrm <- data.frame(col1=numeric(10),col2=character(10),col3=numeric(10))
+y <- data.frame(col1=numeric(n),col2=character(n),col3=factor(n,levels=c("li","shu","yu")))
+
+原子数据类型的相互转换
+
+character,complex,double,integer,logical
+
+as.character(x)
+
+as.complex(x)
+
+as.numeric(x) or as.double(x)
+
+as.integer(x)
+
+as.logical(x)
+
+结构化数据类型之间的转换
+
+as.data.frame(x)
+
+as.list(x)
+
+as.matrix(x)
+
+as.vector(x)
+
+向量到列表	as.list(vec)
+
+向量到矩阵	as.matrix(vec) or matrix(vec,n,m) or rbind(vec) or cbind(vec)
+
+向量到数据框	建立一列数据框 as.data.frame(vec)
+		建立一行数据框 as.data.frame(rbind(vec))
+
+列表到向量	unlist(lst)
+
+列表到矩阵	建立一列矩阵 as.matrix(lst)
+		建立一行矩阵 as.matrix(rbind(lst))
+		建立(n*m)矩阵 matrix(lst,n,m)
+
+列表到数据框	as.data.frame(lst)
+
+矩阵到向量	as.vector(mat)
+
+矩阵到列表	as.list(mat)
+
+矩阵到数据框	as.data.frame(mat)
+
+数据框到向量	dfrm[1,] dfrm[,1] or dfrm[[1]]
+
+数据框到列表	as.list(dfrm)
+
+数据框到矩阵	as.matrix(dfrm)
+
+is.na() 是否是NA
+is.numeirc()
+is.character()
+is.null()
+is.Inf()
+is.NaN()
+is.array()
+is.data.frame()
+is.complex()
+methods(is)

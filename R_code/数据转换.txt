@@ -1,0 +1,156 @@
+library(MASS)
+
+g <- split(Cars93$MPG.city,Cars93$Origin)
+
+median(g[[1]])
+
+median(g[[2]])
+
+score <- list(s1=c(34,56,67,89,90),s2=c(43,54,65),s3=c(12,34,56,67))
+
+lapply(score,length)
+
+> sapply(score,length)
+
+> sapply(score,sd)
+
+> sapply(score,range)
+
+mapply(f,vec,vec,...,vec) 将函数向量化
+
+
+字符串和日期
+
+Date类 POSIXct,POSIXlt
+
+相互转换 as.Date,as.POSIXct,as.POSIXlt
+
+获取字符串的长度 nchar()
+
+paste()连接字符串
+> paste("li","shu","yu",sep="")
+[1] "lishuyu"
+> paste("li","shu","yu",sep="-")
+[1] "li-shu-yu"
+stoo <- c("li","shu","yu")
+> paste(stoo,"liang","sheng")
+[1] "li liang sheng"  "shu liang sheng" "yu liang sheng" 
+paste(stoo,"liang",collapse=",and ")
+[1] "li liang,and shu liang,and yu liang"
+
+substr(string,start,end)提取子字符串
+substr(stoo,nchar(stoo)-1,nchar(stoo))
+[1] "li" "hu" "yu" 	提取每个字符串的最后两个字母
+
+strsplit(string,delimiter) 将一个字符串分割为多个子串
+paths <- c("/home/mike/data/trials.csv","/home/mike/data/errors.csv")
+> strsplit(paths,"/")
+
+sub(old,new,string) 代替字符串的第一个实例
+
+gsub(old,new,string) 代替字符串的所有子串实例
+
+outer and paste 生成两组字符串的所有组合(笛卡尔积)
+ 
+m <- outer(strings1,strings2,paste,sep="")
+locations <- c("NY","LA","CHI","HOU")
+> treat <- c("T1","T2","T3")
+> outer(locations,treat,paste,sep="-")
+
+m <- outer(treat,treat,paste,sep="-")
+> m[!lower.tri(m)]
+
+日期
+
+Sys.Date() 返回当前日期
+
+as.Date("2012-12-31")
+[1] "2012-12-31"
+format(Sys.Date())
+[1] "2016-07-26"
+> as.character(Sys.Date())
+[1] "2016-07-26"
+> format(Sys.Date(),format="%m/%d/%Y")
+[1] "07/26/2016"
+> as.Date("12/31/2010",format="%m/%d/%Y")
+[1] "2010-12-31"
+
+format 定义输出字符串的外观，
+%b	缩写的月份名称("Jan")
+%B	完整的月份名称("January")
+%d	两位数字的日期
+%m	两位数字的月份
+%y	没有世纪的年(00~99)
+%Y	有世纪的年
+
+转化年，月，日为日期 ISOdate(year,month,day)
+结果是一个POSIXct对象，可以转化为一个Date对象
+as.Date(ISOdate(year,month,day))
+
+> ISOdate(2012,2,29)
+[1] "2012-02-29 12:00:00 GMT"
+> as.Date(ISOdate(2012,2,29))
+[1] "2012-02-29"
+尝试转换一个无效日期
+> ISOdate(2013,2,29)
+[1] NA
+
+years <- c(2013,2014,2015,2016)
+> months <- c(1,1,1,1)
+> days <- c(7,14,21,28)
+> ISOdate(years,months,days)
+[1] "2013-01-07 12:00:00 GMT" "2014-01-14 12:00:00 GMT"
+[3] "2015-01-21 12:00:00 GMT" "2016-01-28 12:00:00 GMT"
+> as.Date(ISOdate(years,months,days))
+[1] "2013-01-07" "2014-01-14" "2015-01-21" "2016-01-28"
+> as.Date(ISOdate(years,1,days))
+[1] "2013-01-07" "2014-01-14" "2015-01-21" "2016-01-28"
+
+d <- as.Date("2010-03-15")
+> d
+[1] "2010-03-15"
+> as.integer(d)
+[1] 14683
+> julian(d)
+[1] 14683
+attr(,"origin")
+[1] "1970-01-01"
+> as.integer(as.Date("1970-01-01"))
+[1] 0
+
+提取日期的一部分，把Date对象转换成POSIXlt对象，它是日期
+各部分的列表，然后可以提取所需要的部分
+ d
+[1] "2010-03-15"
+> p <- as.POSIXlt(d)
+> p
+[1] "2010-03-15 UTC"
+> p$mday
+[1] 15
+> p$mon
+[1] 2
+> p$year
+[1] 110
+> p$year+1900
+[1] 2010
+> 
+
+sec 秒数(0,61)
+min 分钟数(0,59)
+hour 小时数(0,23)
+mday 该月的天数(1,31)
+mon 月份(0,11)
+year 自1900年起的年份
+wday 该周的某一天(0,6,0=Sunday)
+yday 该年的某一天(0,365)
+isdst 夏时令标记
+
+创建日期序列
+s <- as.Date("2012-01-01")
+> e <- as.Date("2012-02-01")
+> seq(from=s,to=e,by=1)
+seq(from=s,by=1,length.out=7)
+seq(from=s,by="month",length.out=12)
+seq(from=s,by="3 months",length.out=4)
+seq(from=s,by="year",length.out=10)
+seq(as.Date("2010-01-29"),by="month",len=3)
